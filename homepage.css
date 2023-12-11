@@ -9,25 +9,27 @@ body{
   position: sticky; 
   top: 0;
   background-color:#AEC3AE;
-  padding: 7px 16px;
 }
 .homeButton{
-  fomt-size;
+  font-size;
   border:0;
   background-color:#AEC3AE
 }
 .homeButton:hover{
   color:#374a37;
-  text-decoration:
 }
 .rightAlign{
   display:table-cell;
   text-align:right;
 }
 .rButton{
+  margin-left: 3px;
   border:0;
   border-radius:10px;
   background-color:#AEC3AE
+}
+.lMost{
+  margin-right:15px
 }
 .rButton:hover{
   color:#374a37;
