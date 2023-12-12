@@ -36,7 +36,7 @@ body{
   text-decoration:underline;
 }
 h1{
-  font-family: Tahoma, sans-serif;
+  font-family: Lato, Tahoma;
 }
 h2{
   font-family: Trebuchet MS, sans-serif
@@ -57,4 +57,20 @@ h2{
 }
 .underline{
   text-decoration:underline;
+}
+.footer{
+  position: fixed;
+  bottom:0;
+  padding:10px;
+  width:100%;
+  background-color:#665A48;
+  text-align:center;
+  color:#FFEEF4;
+}
+.TEMP{
+  padding: 20px;
+  font-size: 20px;
+  font-weight:bold;
+  font-family: Arial, sans-serif;
+  
 }
