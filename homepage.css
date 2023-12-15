@@ -1,22 +1,61 @@
+@font-face {
+  font-family: latoThin;
+  src: url(https://rajappan.org/in_use_fonts/lato_thin.ttf);
+}
+@font-face {
+  font-family: latoRegular;
+  src: url(https://rajappan.org/in_use_fonts/lato_regular.ttf);
+}
+@font-face {
+  font-family: latoBold;
+  src: url(https://rajappan.org/in_use_fonts/lato_bold.ttf);
+}
+@font-face {
+  font-family: latoItalic;
+  src: url(https://rajappan.org/in_use_fonts/lato_italic.ttf);
+}
+@font-face {
+  font-family: promptThin;
+  src: url(https://rajappan.org/in_use_fonts/prompt_thin.ttf);
+}
+@font-face {
+  font-family: promptRegular;
+  src: url(https://rajappan.org/in_use_fonts/prompt_regular.ttf);
+}
+@font-face {
+  font-family: promptBold;
+  src: url(https://rajappan.org/in_use_fonts/lato_bold.ttf);
+}
+@font-face {
+  font-family: promptItalic;
+  src: url(https://rajappan.org/in_use_fonts/prompt_italic.ttf);
+}
+
+
 body{
-  background-color:#EDE4E0;
+  background-color:#F5F2EF;
   font-family: Trebuchet MS, sans-serif;
   margin:0;
+  height:1000px
+  position:relative;
 }
 .nav {
   display:table;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.2);
   width:100%;
   position: sticky; 
   top: 0;
-  background-color:#AEC3AE;
+  background-color:#626493;
 }
 .homeButton{
   font-size;
   border:0;
-  background-color:#AEC3AE
+  color:#F0EDEA;
+  background-color:#626493;
+  margin-left:10px
 }
 .homeButton:hover{
-  color:#374a37;
+  color:#8A93A3;
 }
 .rightAlign{
   display:table-cell;
@@ -26,20 +65,23 @@ body{
   margin-left: 3px;
   border:0;
   border-radius:10px;
-  background-color:#AEC3AE
+  background-color:#626493;
+  color:#F0EDEA;
 }
 .lMost{
   margin-right:15px
 }
 .rButton:hover{
-  color:#374a37;
+  color:#8A93A3;
   text-decoration:underline;
 }
 h1{
-  font-family: Lato, Tahoma;
+  font-family: latoRegular, Tahoma MS, sans-serif;
+  font-weight:normal;
 }
 h2{
-  font-family: Trebuchet MS, sans-serif
+  font-family: latoRegular,Trebuchet MS, sans-serif;
+  font-weight:regular;
 }
 .center{
   text-align:center;
@@ -48,29 +90,30 @@ h2{
   font-size: 80px;
   font-weight: bold;
   padding:20px;
-  color: #3f553f;
+  color: #4b3ee4;
+  font-family: promptRegular, Tahoma MS, sans-serif
 }
 .nameInfo{
   font-size: 20px;
-  font-family: Tahoma, sans-serif;
-  color: #665A48
+  font-family: latoBold, Tahoma, sans-serif;
+  color: #1d4c4a;
 }
 .underline{
   text-decoration:underline;
 }
 .footer{
-  position: fixed;
+  position: absolute;
   bottom:0;
-  padding:10px;
+  padding-top:5px;
+  padding-bottom:5px;
   width:100%;
-  background-color:#665A48;
+  background-color:#16151E;
   text-align:center;
-  color:#FFEEF4;
+  color:#F5F2EF;
 }
 .TEMP{
   padding: 20px;
   font-size: 20px;
   font-weight:bold;
-  font-family: Arial, sans-serif;
-  
+  font-family: Arial, sans-serif; 
 }
