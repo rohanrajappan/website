@@ -1,7 +1,36 @@
 @font-face {
-  font-family: latoBold;
-  src: https://rajappan.org/in_use_fonts/lato_bold.ttf;
+  font-family: latoThin;
+  src: url(https://rajappan.org/in_use_fonts/lato_thin.ttf);
 }
+@font-face {
+  font-family: latoRegular;
+  src: url(https://rajappan.org/in_use_fonts/lato_regular.ttf);
+}
+@font-face {
+  font-family: latoBold;
+  src: url(https://rajappan.org/in_use_fonts/lato_bold.ttf);
+}
+@font-face {
+  font-family: latoItalic;
+  src: url(https://rajappan.org/in_use_fonts/lato_italic.ttf);
+}
+@font-face {
+  font-family: promptThin;
+  src: url(https://rajappan.org/in_use_fonts/prompt_thin.ttf);
+}
+@font-face {
+  font-family: promptRegular;
+  src: url(https://rajappan.org/in_use_fonts/prompt_regular.ttf);
+}
+@font-face {
+  font-family: promptBold;
+  src: url(https://rajappan.org/in_use_fonts/lato_bold.ttf);
+}
+@font-face {
+  font-family: promptItalic;
+  src: url(https://rajappan.org/in_use_fonts/prompt_italic.ttf);
+}
+
 
 body{
   background-color:#F5F2EF;
@@ -47,10 +76,12 @@ body{
   text-decoration:underline;
 }
 h1{
-  font-family: latoBold;
+  font-family: latoRegular, Tahoma MS, sans-serif;
+  font-weight:normal;
 }
 h2{
-  font-family: Trebuchet MS, sans-serif
+  font-family: latoRegular,Trebuchet MS, sans-serif;
+  font-weight:regular;
 }
 .center{
   text-align:center;
@@ -60,10 +91,11 @@ h2{
   font-weight: bold;
   padding:20px;
   color: #4b3ee4;
+  font-family: promptRegular, Tahoma MS, sans-serif
 }
 .nameInfo{
   font-size: 20px;
-  font-family: Tahoma, sans-serif;
+  font-family: latoBold, Tahoma, sans-serif;
   color: #1d4c4a;
 }
 .underline{
@@ -83,6 +115,5 @@ h2{
   padding: 20px;
   font-size: 20px;
   font-weight:bold;
-  font-family: Arial, sans-serif;
-  
+  font-family: Arial, sans-serif; 
 }
