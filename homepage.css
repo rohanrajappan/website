@@ -117,3 +117,18 @@ h2{
   font-weight:bold;
   font-family: Arial, sans-serif; 
 }
+.footerButton{
+  width:48px;
+  height:48px;
+  background-color: #4b3ee4;
+  color: #16151E;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  border:none;
+  margin-left:5px;
+}
+.footerButton:hover{
+  background-color: #594de6;
+}
