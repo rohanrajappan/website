@@ -1,3 +1,4 @@
+/* Importing Fonts */
 @font-face {
   font-family: latoThin;
   src: url(https://rajappan.org/in_use_fonts/lato_thin.ttf);
@@ -30,14 +31,19 @@
   font-family: promptItalic;
   src: url(https://rajappan.org/in_use_fonts/prompt_italic.ttf);
 }
-
-
+/* End Fonts */
+html {
+  scroll-behavior: smooth;
+}
 body{
   background-color:#F5F2EF;
   font-family: Trebuchet MS, sans-serif;
   margin:0;
   height:1000px
   position:relative;
+}
+a{
+  display:inline-block;
 }
 .nav {
   display:table;
@@ -48,11 +54,13 @@ body{
   background-color:#626493;
 }
 .homeButton{
-  font-size;
   border:0;
   color:#F0EDEA;
   background-color:#626493;
-  margin-left:10px
+  margin-left:10px;
+}
+.homeName{
+  font-family: promptRegular, Tahoma MS, sans-serif;
 }
 .homeButton:hover{
   color:#8A93A3;
@@ -102,7 +110,6 @@ h2{
   text-decoration:underline;
 }
 .footer{
-  position: absolute;
   bottom:0;
   padding-top:5px;
   padding-bottom:5px;
@@ -110,12 +117,6 @@ h2{
   background-color:#16151E;
   text-align:center;
   color:#F5F2EF;
-}
-.TEMP{
-  padding: 20px;
-  font-size: 20px;
-  font-weight:bold;
-  font-family: Arial, sans-serif; 
 }
 .footerButton{
   width:48px;
@@ -131,4 +132,52 @@ h2{
 }
 .footerButton:hover{
   background-color: #594de6;
+}
+.faceImage{
+  padding:10px;
+  padding-top:30px;
+  width:400px;
+  border-radius:100%;
+  align-items:center;
+}
+.infoPadding{
+  padding-left:20px;
+  padding-right:20px;
+}
+.contactTitle{
+  font-size: 72px;
+  font-weight: bold;
+  padding-top:10px;
+  color: #4b3ee4;
+  font-family: promptRegular, Tahoma MS, sans-serif;
+  margin:20px;
+}
+table{
+  margin:0 auto;
+}
+.emailName{
+  font-size: 48px;
+  font-weight: bold;
+  padding:10px;
+  padding-right:30px;
+  color: #171a3c;
+  font-family: latoRegular, Tahoma MS, sans-serif;
+}
+.emailEnd{
+  font-size: 48px;
+  font-weight: bold;
+  padding-top:0px;
+  padding-bottom:30px;
+  padding-left:30px;
+  color: #171a3c;
+  font-family: latoRegular, Tahoma MS, sans-serif
+}
+.smallOr{
+  font-size:30px;
+  color: #4b3ee4
+}
+.linkedInInvite{
+  font-family: promptRegular, TahomaMS, sans-serif;
+  font-size:24px;
+  color:#171a3c;
 }
