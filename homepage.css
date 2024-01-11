@@ -110,7 +110,7 @@ h2{
   text-decoration:underline;
 }
 .footer{
-  bottom:0;
+  position:absolute;
   padding-top:5px;
   padding-bottom:5px;
   width:100%;
