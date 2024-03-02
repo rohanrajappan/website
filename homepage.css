@@ -64,7 +64,8 @@ a{
   margin-left:10px;
 }
 .homeName{
-  font-family: promptBold, Tahoma MS, sans-serif;
+  font-family: promptRegular, Tahoma MS, sans-serif;
+  font-weight: bold;
 }
 .homeButton:hover{
   color:#8A93A3;
@@ -81,7 +82,8 @@ a{
   color:#F0EDEA;
 }
 .rButtonText{
-  font-family: promptBold, Tahoma MS, sans-serif;
+  font-family: promptRegular, Tahoma MS, sans-serif;
+  font-weight: bold;
 }
 .lMost{
   margin-right:15px
@@ -111,7 +113,7 @@ h2{
   font-weight: bold;
   padding:20px;
   color: #4b3ee4;
-  font-family: promptBold, Tahoma MS, sans-serif
+  font-family: promptRegular, Tahoma MS, sans-serif
 }
 .nameInfo{
   font-size: 30px;
