@@ -36,6 +36,19 @@
   src: url(https://rajappan.org/in_use_fonts/nunitosans_variable.ttf);
 }
 /* End Fonts */
+
+/* Scrollbar: */
+::-webkit-scrollbar {
+  width: 8px;
+  background:transparent;
+}
+::-webkit-scrollbar-thumb {
+  border: 5px solid transparent;
+  background-clip: 0; 
+  background-color: #171a3c;
+  border-radius: 8px;
+}
+/* End Scrollbar */
 html {
   scroll-behavior: smooth;
 }
