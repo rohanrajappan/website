@@ -1,4 +1,4 @@
 deployment:
   tasks:
     -export DEPLOYPATH=/home/rajappan/public_html
-    -bin/cp * $DEPLOYPATH
+    -bin/cp index.html $DEPLOYPATH
