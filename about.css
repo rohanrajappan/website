@@ -68,12 +68,12 @@ a{
   width:100%;
   position: sticky; 
   top: 0;
-  background-color:#6561dd;
+  background-color:#4b3ee4;
 }
 .homeButton{
   border:0;
   color:#F0EDEA;
-  background-color:#6561dd;
+  background-color:#4b3ee4;
   margin-left:10px;
 }
 .homeName{
@@ -91,7 +91,7 @@ a{
   margin-left: 3px;
   border:0;
   border-radius:10px;
-  background-color:#6561dd;
+  background-color:#4b3ee4;
   color:#F0EDEA;
 }
 .rButtonText{
