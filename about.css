@@ -53,7 +53,7 @@ html {
   scroll-behavior: smooth;
 }
 body{
-  background-color:#F5F2EF;
+  background-color:#b0bdf0;
   font-family: Trebuchet MS, sans-serif;
   margin:0;
   height:1000px;
@@ -68,12 +68,12 @@ a{
   width:100%;
   position: sticky; 
   top: 0;
-  background-color:#4b3ee4;
+  background-color:#6561dd;
 }
 .homeButton{
   border:0;
   color:#F0EDEA;
-  background-color:#4b3ee4;
+  background-color:#6561dd;
   margin-left:10px;
 }
 .homeName{
@@ -91,7 +91,7 @@ a{
   margin-left: 3px;
   border:0;
   border-radius:10px;
-  background-color:#4b3ee4;
+  background-color:#6561dd;
   color:#F0EDEA;
 }
 .rButtonText{
@@ -122,35 +122,7 @@ h2{
   padding-bottom:10px;
   border-radius: 5%;
 }
-.name{
-  font-size: 80px;
-  font-weight: bold;
-  padding:20px;
-  color: #4b3ee4;
-  font-family: promptRegular, Tahoma MS, sans-serif
-}
-.nameInfo{
-  font-size: 30px;
-  font-family: nunitoSans, Tahoma, sans-serif;
-  color: #1d4c4a;
-  font-weight: 1000;
-}
-.bio{
-  font-size: 20px;
-  font-family:latoBold, Tahoma MS, sans-serif;
-  padding:20px;
-  padding-top:50px;
-  padding-bottom:50px;
-  color: #d7dfe4;
-  font-weight:bold;
-}
-/*Temporary while looking for summer pos.*/
-.applying{
-  font-size:25px;
-}
-.underline{
-  text-decoration:underline;
-}
+
 .footer{
   position:absolute;
   padding-top:5px;
@@ -175,53 +147,63 @@ h2{
 .footerButton:hover{
   background-color: #594de6;
 }
-.faceImage{
-  padding:10px;
-  padding-top:30px;
-  width:400px;
-  border-radius:100%;
-  align-items:center;
+
+/* New Content */
+.split{
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 0px;
 }
-.infoPadding{
-  padding-left:50px;
-  padding-right:50px;
-  text-align: justify;
-  text-align-last: center;
+.splitLeft{
+  background-color: #d7dfe4;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
-.contactTitle{
-  font-size: 72px;
+.splitRight{
+  background-color: #b0bdf0;
+}
+.aboutTitle{
+  font-size: 80px;
   font-weight: bold;
+  padding:0px;
+  margin:0px;
   padding-top:10px;
-  color: #4b3ee4;
-  font-family: promptRegular, Tahoma MS, sans-serif;
-  margin:20px;
+  color: #1d4c4a;
+  text-align: center;
+  font-family: promptRegular, Tahoma MS, sans-serif
 }
-table{
-  margin:0 auto;
+.aboutInfo{
+  background-color: #d7dfe4;
+  width:60%;
+  margin:auto;
+  text-align: center;
+  border-radius: 8px;
+  /* CHANGE BELOW AFTER ADDING CONTENT */
+  margin-bottom: 30px; 
 }
-.emailName{
-  font-size: 48px;
-  font-weight: bold;
+.aboutInfoText{
+  font-size: 24px;
   padding:10px;
-  padding-right:30px;
-  color: #171a3c;
-  font-family: latoRegular, Tahoma MS, sans-serif;
-}
-.emailEnd{
-  font-size: 48px;
-  font-weight: bold;
-  padding-top:0px;
-  padding-bottom:30px;
-  padding-left:30px;
-  color: #171a3c;
-  font-family: latoRegular, Tahoma MS, sans-serif
-}
-.smallOr{
-  font-size:30px;
-  color: #4b3ee4
-}
-.linkedInInvite{
   font-family: promptRegular, TahomaMS, sans-serif;
   font-size:24px;
-  color:#171a3c;
+  color:#2b3cbd;
+  margin:0px;
 }
+
+/* TEMP */
+.imagesSoon{
+  font-size: 48px;
+  font-weight: bold;
+  padding:0px;
+  margin:0px;
+  padding-top:20px;
+  color: #1d4c4a;
+  text-align: center;
+  font-family: promptRegular, Tahoma MS, sans-serif
+}
+.badge-base{
+  display:flex;
+  justify-content: center;
+  padding:10px;
+}
+/* END TEMP */
