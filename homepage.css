@@ -1,39 +1,40 @@
 /* Importing Fonts */
+
 @font-face {
   font-family: latoThin;
-  src: url(https://rajappan.org/in_use_fonts/lato_thin.ttf);
+  src: url('in_use_fonts/lato_thin.ttf');
 }
 @font-face {
   font-family: latoRegular;
-  src: url(https://rajappan.org/in_use_fonts/lato_regular.ttf);
+  src: url('in_use_fonts/lato_regular.ttf');
 }
 @font-face {
   font-family: latoBold;
-  src: url(https://rajappan.org/in_use_fonts/lato_bold.ttf);
+  src: url('in_use_fonts/lato_bold.ttf');
 }
 @font-face {
   font-family: latoItalic;
-  src: url(https://rajappan.org/in_use_fonts/lato_italic.ttf);
+  src: url('in_use_fonts/lato_italic.ttf');
 }
 @font-face {
   font-family: promptThin;
-  src: url(https://rajappan.org/in_use_fonts/prompt_thin.ttf);
+  src: url('in_use_fonts/prompt_thin.ttf');
 }
 @font-face {
   font-family: promptRegular;
-  src: url(https://rajappan.org/in_use_fonts/prompt_regular.ttf);
+  src: url('in_use_fonts/prompt_regular.ttf');
 }
 @font-face {
   font-family: promptBold;
-  src: url(https://rajappan.org/in_use_fonts/lato_bold.ttf);
+  src: url('in_use_fonts/lato_bold.ttf');
 }
 @font-face {
   font-family: promptItalic;
-  src: url(https://rajappan.org/in_use_fonts/prompt_italic.ttf);
+  src: url('in_use_fonts/prompt_italic.ttf');
 }
 @font-face {
   font-family:nunitoSans ;
-  src: url(https://rajappan.org/in_use_fonts/nunitosans_variable.ttf);
+  src: url('in_use_fonts/nunitosans_variable.ttf');
 }
 /* End Fonts */
 
@@ -81,7 +82,7 @@ a{
   font-weight: bold;
 }
 .homeButton:hover{
-  color:#8A93A3;
+  color:#a8b3d0;
 }
 .rightAlign{
   display:table-cell;
@@ -102,7 +103,7 @@ a{
   margin-right:15px
 }
 .rButton:hover{
-  color:#8A93A3;
+  color:#a8b3d0;
   text-decoration:underline;
 }
 h1{
