@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IREC 2025-2026 GANTT Chart (View-Only)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .gantt-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid #e2e8f0; /* slate-200 */
+            border-radius: 0.5rem;
+        }
+        .gantt-grid {
+            display: grid;
+            /* WBS | Title | Owner | Start | End | Timeline */
+            align-items: center;
+        }
+        .gantt-header {
+            background-color: #f1f5f9; /* slate-100 */
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .gantt-cell, .gantt-header-cell {
+            padding: 0.5rem 0.75rem;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 52px;
+            display: flex;
+            align-items: center;
+        }
+        .gantt-timeline-header, .gantt-timeline-row {
+            position: relative;
+            border-bottom: 1px solid #e2e8f0;
+            height: 52px;
+        }
+        .gantt-bar {
+            position: absolute;
+            height: 60%;
+            top: 20%;
+            border-radius: 0.25rem;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 500;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s;
+            z-index: 2; /* Ensure bars are above grid lines */
+        }
+        .gantt-bar-phase-1 { background-color: #3b82f6; } /* blue-500 */
+        .gantt-bar-phase-2 { background-color: #10b981; } /* emerald-500 */
+        .gantt-bar-phase-3 { background-color: #f97316; } /* orange-500 */
+        .gantt-bar-phase-4 { background-color: #8b5cf6; } /* violet-500 */
+        .gantt-bar-parent { background-color: #64748b; } /* slate-500 */
+        .month-header, .week-header {
+            text-align: center;
+            padding: 0.25rem 0;
+            border-right: 1px solid #e2e8f0;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .week-header {
+            font-size: 0.7rem;
+            color: #64748b; /* slate-500 */
+        }
+        .phase-row { font-weight: 700; background-color: #f1f5f9; }
+        .phase-row .gantt-cell { font-size: 1rem; }
+        .task-row { background-color: #ffffff; }
+        .sub-task .gantt-cell:nth-child(2) { padding-left: 2rem; }
+        .sub-sub-task .gantt-cell:nth-child(2) { padding-left: 3rem; }
+        .design-review { font-weight: 600; }
+        .resizer {
+            position: absolute;
+            top: 0;
+            right: -2px;
+            width: 5px;
+            height: 100%;
+            cursor: col-resize;
+            z-index: 20;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-screen-2xl mx-auto">
+        <h1 class="text-3xl font-bold text-slate-800 mb-2">IREC 2025-2026 GANTT Chart (View-Only)</h1>
+        <p class="text-slate-600 mb-6">Use the controls to adjust the view. Drag column headers to resize.</p>
+
+        <div class="flex items-center justify-between mb-4">
+            <!-- Legend -->
+            <div class="flex flex-wrap gap-4">
+                <div class="flex items-center"><div class="w-4 h-4 rounded-full mr-2" style="background-color: #3b82f6;"></div><span class="text-sm text-slate-700">Planning & Design</span></div>
+                <div class="flex items-center"><div class="w-4 h-4 rounded-full mr-2" style="background-color: #10b981;"></div><span class="text-sm text-slate-700">Manufacturing</span></div>
+                <div class="flex items-center"><div class="w-4 h-4 rounded-full mr-2" style="background-color: #f97316;"></div><span class="text-sm text-slate-700">Integration</span></div>
+                <div class="flex items-center"><div class="w-4 h-4 rounded-full mr-2" style="background-color: #8b5cf6;"></div><span class="text-sm text-slate-700">Competition</span></div>
+                <div class="flex items-center"><div class="w-4 h-4 rounded-full mr-2" style="background-color: #64748b;"></div><span class="text-sm text-slate-700">Summary</span></div>
+            </div>
+            <!-- View Controls -->
+            <div class="flex items-center gap-2">
+                <button id="zoomOutBtn" class="px-3 py-1 bg-white border border-slate-300 rounded-md text-lg font-bold hover:bg-slate-50">-</button>
+                <button id="zoomInBtn" class="px-3 py-1 bg-white border border-slate-300 rounded-md text-lg font-bold hover:bg-slate-50">+</button>
+                <button id="todayBtn" class="px-3 py-1 bg-white border border-slate-300 rounded-md hover:bg-slate-50">Today</button>
+            </div>
+        </div>
+
+        <div id="gantt-chart" class="gantt-wrapper bg-white shadow-lg">
+            <!-- Chart will be rendered here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const tasks = [
+            { wbs: '1', title: 'PHASE 1: PLANNING & DESIGN', owner: '', start: '2025-06-02', end: '2025-12-19', type: 'phase' },
+            { wbs: '1.1', title: 'Summer Preparation', owner: '', start: '2025-06-02', end: '2025-08-22', type: 'parent' },
+            { wbs: '1.1.1', title: 'Lead Selection & Onboarding', owner: 'Previous Leads', start: '2025-06-21', end: '2025-07-04', type: 'task' },
+            { wbs: '1.1.2', title: 'Summer Research', owner: 'All Leads', start: '2025-07-04', end: '2025-08-22', type: 'task' },
+            { wbs: '1.2', title: 'System Requirements Review (SRR)', owner: 'All Leads', start: '2025-07-27', end: '2025-08-29', type: 'task', isReview: true },
+            { wbs: '1.2.1', title: 'Write Requirements', owner: 'All Leads', start: '2025-07-27', end: '2025-08-22', type: 'task' },
+            { wbs: '1.3', title: 'Conceptual Design Review (CoDR)', owner: 'All Leads', start: '2025-09-01', end: '2025-09-19', type: 'task', isReview: true },
+            { wbs: '1.4', title: 'Preliminary Design Review (PDR)', owner: 'All Leads', start: '2025-09-22', end: '2025-10-17', type: 'task', isReview: true },
+            { wbs: '1.5', title: 'Critical Design Review (CDR)', owner: 'All Leads', start: '2025-10-20', end: '2025-11-14', type: 'task', isReview: true },
+            { wbs: '1.6', title: 'Fall Semester Testing', owner: '', start: '2025-09-01', end: '2025-11-21', type: 'parent' },
+            { wbs: '1.7', title: 'Ready for Manufacturing (RFM)', owner: 'All Leads', start: '2025-11-17', end: '2025-12-05', type: 'task', isReview: true },
+            { wbs: '1.8', title: 'Procurement', owner: '', start: '2025-11-17', end: '2025-12-19', type: 'parent' },
+            { wbs: '1.8.1', title: 'Finalize Bill of Materials (BOM)', owner: 'All Leads', start: '2025-11-17', end: '2025-12-05', type: 'task' },
+            { wbs: '1.8.2', title: 'Order All Stock Components', owner: 'IREC Lead, Exec', start: '2025-12-08', end: '2025-12-19', type: 'task' },
+            { wbs: '2', title: 'PHASE 2: MANUFACTURING', owner: '', start: '2026-01-12', end: '2026-04-10', type: 'phase' },
+            { wbs: '2.1', title: 'Aerostructures Manufacturing', owner: '', start: '2026-01-12', end: '2026-03-20', type: 'parent' },
+            { wbs: '3', title: 'PHASE 3: INTEGRATION & TESTING', owner: '', start: '2026-03-23', end: '2026-05-22', type: 'phase' },
+            { wbs: '3.1', title: 'Sub-system Integration', owner: '', start: '2026-03-23', end: '2026-04-10', type: 'parent' },
+            { wbs: '3.1.1', title: 'Avionics Bay Hardware Integration', owner: 'Avionics & Aerostructures', start: '2026-03-23', end: '2026-04-10', type: 'task' },
+            { wbs: '3.1.2', title: 'Strain Gauge Integration', owner: 'Measurements & Aerostructures', start: '2026-03-23', end: '2026-04-10', type: 'task' },
+            { wbs: '3.1.3', title: 'Payload Integration', owner: 'Payload & Aerostructures', start: '2026-03-30', end: '2026-04-10', type: 'task' },
+            { wbs: '3.1.4', title: 'Recovery System Integration', owner: 'Recovery & Aerostruc tures', start: '2026-03-30', end: '2026-04-10', type: 'task' },
+            { wbs: '3.2', title: 'Final Assembly & Testing', owner: '', start: '2026-04-10', end: '2026-05-01', type: 'parent' },
+            { wbs: '3.2.1', title: 'Full Rocket Assembly', owner: 'All Leads', start: '2026-04-20', end: '2026-05-01', type: 'task' },
+            { wbs: '3.2.2', title: 'Ground Testing', owner: 'All Leads', start: '2026-05-04', end: '2026-05-15', type: 'task' },
+            { wbs: '3.2.3', title: 'Test Launch', owner: 'All Leads', start: '2026-04-10', end: '2026-05-03', type: 'task', isReview: true },
+            { wbs: '4', title: 'PHASE 4: COMPETITION', owner: '', start: '2026-06-15', end: '2026-06-20', type: 'phase' },
+            { wbs: '4.1', title: 'Pack Bay', owner: 'Lab Manager, All Leads', start: '2026-05-15', end: '2026-06-15', type: 'task' },
+            { wbs: '4.1', title: 'IREC', owner: '', start: '2026-06-15', end: '2026-06-20', type: 'task' },
+        ];
+
+        // --- STATE ---
+        let dayWidth = 15; // Tighter initial view
+        let columnWidths = [70, 300, 180, 130, 130]; // WBS, Title, Owner, Start, End
+
+        // --- RENDER LOGIC ---
+        function renderGantt() {
+            const chartContainer = document.getElementById('gantt-chart');
+            chartContainer.innerHTML = ''; 
+
+            const parseDate = (dateStr) => new Date(dateStr + 'T00:00:00');
+            const dayDiff = (start, end) => (end - start) / (1000 * 60 * 60 * 24);
+
+            const projectStart = parseDate('2025-06-02');
+            const projectEnd = parseDate('2026-06-30');
+            const totalDays = dayDiff(projectStart, projectEnd) + 1;
+            const timelineWidth = totalDays * dayWidth;
+
+            // --- Build Header ---
+            const months = [];
+            let currentMonthDate = new Date(projectStart);
+            while (currentMonthDate <= projectEnd) {
+                const monthStart = new Date(currentMonthDate.getFullYear(), currentMonthDate.getMonth(), 1);
+                const monthEnd = new Date(currentMonthDate.getFullYear(), currentMonthDate.getMonth() + 1, 0);
+                months.push({
+                    name: monthStart.toLocaleString('default', { month: 'short' }) + ' \'' + monthStart.getFullYear().toString().substring(2),
+                    days: dayDiff(monthStart, monthEnd) + 1,
+                });
+                currentMonthDate.setMonth(currentMonthDate.getMonth() + 1);
+            }
+            
+            const weeks = [];
+            let currentWeekDate = new Date(projectStart);
+            // Adjust to start on a Monday
+            const dayOfWeek = currentWeekDate.getDay();
+            const adjustment = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+            currentWeekDate.setDate(currentWeekDate.getDate() + adjustment);
+            while(currentWeekDate <= projectEnd) {
+                weeks.push(new Date(currentWeekDate));
+                currentWeekDate.setDate(currentWeekDate.getDate() + 7);
+            }
+
+            const gridTemplateColumns = columnWidths.map(w => `${w}px`).join(' ') + ' 1fr';
+            
+            let headerHtml = `<div class="gantt-grid gantt-header" style="grid-template-columns: ${gridTemplateColumns};">
+                <div class="gantt-header-cell relative">WBS<div class="resizer" data-col-index="0"></div></div>
+                <div class="gantt-header-cell relative">Task Name<div class="resizer" data-col-index="1"></div></div>
+                <div class="gantt-header-cell relative">Owner<div class="resizer" data-col-index="2"></div></div>
+                <div class="gantt-header-cell relative">Start Date<div class="resizer" data-col-index="3"></div></div>
+                <div class="gantt-header-cell relative">End Date<div class="resizer" data-col-index="4"></div></div>
+                <div class="gantt-timeline-header" style="width: ${timelineWidth}px; display: flex; flex-direction: column;">
+                    <div style="display: flex; flex-shrink: 0; height: 50%;">`;
+            months.forEach(month => {
+                headerHtml += `<div class="month-header" style="width: ${month.days * dayWidth}px; flex-shrink: 0;">${month.name}</div>`;
+            });
+            headerHtml += `</div><div style="display: flex; flex-shrink: 0; height: 50%; border-top: 1px solid #e2e8f0;">`;
+            weeks.forEach(week => {
+                headerHtml += `<div class="week-header" style="width: ${7 * dayWidth}px; flex-shrink: 0;">${week.getMonth() + 1}/${week.getDate()}</div>`;
+            });
+            headerHtml += `</div></div></div>`;
+            
+            // --- Build Rows ---
+            let rowsHtml = '';
+            tasks.forEach((task) => {
+                const level = (task.wbs.match(/\./g) || []).length;
+                let rowClass = 'task-row';
+                if (task.type === 'phase') rowClass = 'phase-row';
+                if (level === 1 && task.type !== 'phase') rowClass += ' sub-task';
+                if (level === 2) rowClass += ' sub-sub-task';
+                if (task.isReview) rowClass += ' design-review';
+
+                rowsHtml += `<div class="gantt-grid ${rowClass}" style="grid-template-columns: ${gridTemplateColumns};">
+                    <div class="gantt-cell">${task.wbs}</div>
+                    <div class="gantt-cell" title="${task.title}">${task.title}</div>
+                    <div class="gantt-cell" title="${task.owner}">${task.owner}</div>
+                    <div class="gantt-cell">${task.start}</div>
+                    <div class="gantt-cell">${task.end}</div>
+                    <div class="gantt-timeline-row" style="width: ${timelineWidth}px;">`;
+                
+                // Add vertical week lines
+                for (let i = 0; i < weeks.length; i++) {
+                    const weekStartDay = dayDiff(projectStart, weeks[i]);
+                    if (weekStartDay >= 0) {
+                        rowsHtml += `<div style="position: absolute; left: ${weekStartDay * dayWidth}px; top: 0; bottom: 0; width: 1px; background-color: #f1f5f9; z-index: 1;"></div>`;
+                    }
+                }
+
+                if (task.start && task.end) {
+                    const taskStart = parseDate(task.start);
+                    const taskEnd = parseDate(task.end);
+                    if (!isNaN(taskStart) && !isNaN(taskEnd)) {
+                        const startDay = dayDiff(projectStart, taskStart);
+                        const durationDays = dayDiff(taskStart, taskEnd) + 1;
+                        const left = startDay * dayWidth;
+                        const width = durationDays * dayWidth;
+                        
+                        let barClass = 'gantt-bar-phase-1';
+                        if (task.wbs.startsWith('2')) barClass = 'gantt-bar-phase-2';
+                        if (task.wbs.startsWith('3')) barClass = 'gantt-bar-phase-3';
+                        if (task.wbs.startsWith('4')) barClass = 'gantt-bar-phase-4';
+                        if (task.type === 'parent' || task.type === 'phase') barClass = 'gantt-bar-parent';
+
+                        rowsHtml += `<div class="gantt-bar ${barClass}" style="left: ${left}px; width: ${width}px;" title="${task.title}: ${task.start} to ${task.end}"></div>`;
+                    }
+                }
+                rowsHtml += `</div></div>`;
+            });
+
+            chartContainer.innerHTML = headerHtml + rowsHtml;
+            addResizerListeners();
+        }
+
+        // --- CONTROLS & INTERACTIONS ---
+        document.getElementById('zoomInBtn').addEventListener('click', () => { dayWidth = Math.min(50, dayWidth + 5); renderGantt(); });
+        document.getElementById('zoomOutBtn').addEventListener('click', () => { dayWidth = Math.max(5, dayWidth - 5); renderGantt(); });
+        document.getElementById('todayBtn').addEventListener('click', () => {
+            const container = document.querySelector('.gantt-wrapper');
+            const projectStart = new Date('2025-06-02T00:00:00');
+            const today = new Date();
+            const diff = (today - projectStart) / (1000 * 60 * 60 * 24);
+            const scrollPos = diff * dayWidth - container.clientWidth / 2;
+            container.scrollLeft = scrollPos;
+        });
+
+        function addResizerListeners() {
+            const resizers = document.querySelectorAll('.resizer');
+            let activeResizer = null;
+            let startX, startWidths;
+
+            resizers.forEach(resizer => {
+                resizer.addEventListener('mousedown', (e) => {
+                    activeResizer = e.target;
+                    startX = e.pageX;
+                    startWidths = [...columnWidths];
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                    e.preventDefault();
+                });
+            });
+
+            function onMouseMove(e) {
+                if (!activeResizer) return;
+                const colIndex = parseInt(activeResizer.dataset.colIndex);
+                const deltaX = e.pageX - startX;
+                const newWidth = startWidths[colIndex] + deltaX;
+                if (newWidth > 50) { // Minimum width
+                    columnWidths[colIndex] = newWidth;
+                    const newGridTemplate = columnWidths.map(w => `${w}px`).join(' ') + ' 1fr';
+                    document.querySelectorAll('.gantt-grid').forEach(grid => {
+                        grid.style.gridTemplateColumns = newGridTemplate;
+                    });
+                }
+            }
+
+            function onMouseUp() {
+                activeResizer = null;
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            }
+        }
+
+        // --- INITIAL RENDER ---
+        document.addEventListener('DOMContentLoaded', renderGantt);
+    </script>
+</body>
+</html>
