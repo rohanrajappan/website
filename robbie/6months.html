@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAPPY 6 MONTHS!!</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+    <style>
+        /* General page setup to create the romantic atmosphere */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing due to off-screen bubbles */
+            background: linear-gradient(135deg, #fff0f5, #ffdde1, #ffffff); /* Soft, romantic gradient */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none; /* Prevents text selection on bubbles */
+        }
+
+        /* NEW: Password protection overlay and modal */
+        #password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 240, 245, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease-out;
+        }
+
+        #password-modal {
+            background: white;
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        #password-modal h2 {
+            margin-top: 0;
+            color: #333;
+            font-weight: 300;
+            font-size: 1.5rem;
+        }
+
+        #password-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+
+        #password-modal button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 10px;
+            background: #e91e63;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #password-modal button:hover {
+            background: #d81b60;
+        }
+
+        #error-message {
+            color: #e91e63;
+            height: 20px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Container for all bubbles, filling the entire viewport */
+        #bubble-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Individual bubble styling */
+        .bubble {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            cursor: pointer;
+            perspective: 1500px;
+            top: 0;
+            left: 0;
+            will-change: transform;
+        }
+
+        /* The inner element that performs the 3D flip */
+        .bubble-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            transform-style: preserve-3d;
+        }
+
+        /* This class is toggled by JavaScript to trigger the flip animation */
+        .bubble-inner.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        /* Common styling for both the front and back faces of the bubble */
+        .bubble-front,
+        .bubble-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12), inset 0 0 20px rgba(255, 255, 255, 0.7);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        /* Front face of the bubble with a glassy, translucent look */
+        .bubble-front {
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            background-color: #ffc0cb; /* Fallback color */
+        }
+
+        /* Back face of the bubble, which holds the romantic message */
+        .bubble-back {
+            background: radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.9), rgba(255, 210, 220, 0.8));
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            transform: rotateY(180deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        /* Styling for the message text */
+        .bubble-back p {
+            color: #d6336c;
+            font-size: 1.8rem;
+            font-weight: 300;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NEW: Password overlay -->
+    <div id="password-overlay">
+        <div id="password-modal">
+            <h2>Please enter a special date</h2>
+            <form id="password-form">
+                <input type="password" id="password-input" placeholder="MM/DD/YYYY" autocomplete="off" autofocus>
+                <button type="submit">Unlock</button>
+            </form>
+            <p id="error-message"></p>
+        </div>
+    </div>
+
+    <div id="bubble-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Password Elements ---
+            const passwordOverlay = document.getElementById('password-overlay');
+            const passwordForm = document.getElementById('password-form');
+            const passwordInput = document.getElementById('password-input');
+            const errorMessage = document.getElementById('error-message');
+            const correctPassword = "01/18/2025";
+
+            // --- Bubble Elements ---
+            const container = document.getElementById('bubble-container');
+            const BUBBLE_SIZE = 300;
+            const BUBBLE_RADIUS = BUBBLE_SIZE / 2;
+            const bubbles = [];
+            
+            const imagePaths = [
+                '6month_images/image1.jpeg',
+                '6month_images/image2.jpeg',
+                '6month_images/image3.jpg',
+                '6month_images/image4.jpg',
+                '6month_images/image5.jpg',
+                '6month_images/image6.jpg',
+                '6month_images/image7.jpg',
+                '6month_images/image8.jpg',
+                '6month_images/image9.jpg'  
+            ];
+
+            const messages = [
+                "i love your smile",
+                "i love you, my pretty boyyy!",
+                "are you free for the next 40-60 years?",
+                "train watching every week for the rest of our lives?",
+                "i cant wait to rest my nose on your head and smell your hair",
+                "voted as most handsome man alive, i present to you robbie 'pretty boy' shepherd",
+                "i want to celebrate the 18th of every month with you, even as we get old",
+                "i think your forehead is missing something rn.... maybe a kiss?",
+                "i want to hear every thought you ever have my smarty pants boyfriend!"
+            ];
+
+            // --- Password Logic ---
+            passwordForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                if (passwordInput.value === correctPassword) {
+                    // Correct password: hide overlay and start the animation
+                    passwordOverlay.classList.add('hidden');
+                    // Wait for fade-out transition before starting heavy animations
+                    setTimeout(init, 500); 
+                } else {
+                    // Incorrect password: show error and clear input
+                    errorMessage.textContent = "That's not it, silly!";
+                    passwordInput.value = '';
+                    setTimeout(() => errorMessage.textContent = '', 2000);
+                }
+            });
+
+            // --- Bubble Creation ---
+            function createBubble(index, isInitialSpawn) {
+                const bubbleEl = document.createElement('div');
+                bubbleEl.className = 'bubble';
+                const bubbleInner = document.createElement('div');
+                bubbleInner.className = 'bubble-inner';
+                const bubbleFront = document.createElement('div');
+                bubbleFront.className = 'bubble-front';
+                
+                const imageIndex = index % imagePaths.length;
+                bubbleFront.style.backgroundImage = `url('${imagePaths[imageIndex]}')`;
+                bubbleFront.style.backgroundSize = 'cover';
+                bubbleFront.style.backgroundPosition = 'center';
+
+                const bubbleBack = document.createElement('div');
+                bubbleBack.className = 'bubble-back';
+                const messageP = document.createElement('p');
+                messageP.innerHTML = messages[index % messages.length];
+                bubbleBack.appendChild(messageP);
+
+                bubbleInner.appendChild(bubbleFront);
+                bubbleInner.appendChild(bubbleBack);
+                bubbleEl.appendChild(bubbleInner);
+
+                bubbleEl.addEventListener('click', () => {
+                    bubbleInner.classList.toggle('is-flipped');
+                });
+
+                let position;
+                if (isInitialSpawn) {
+                    let isOverlapping;
+                    let attempts = 0;
+                    do {
+                        isOverlapping = false;
+                        position = {
+                            x: BUBBLE_RADIUS + Math.random() * (window.innerWidth - BUBBLE_SIZE),
+                            y: BUBBLE_RADIUS + Math.random() * (window.innerHeight - BUBBLE_SIZE)
+                        };
+                        for (const other of bubbles) {
+                            const dist = Math.hypot(position.x - other.x, position.y - other.y);
+                            if (dist < BUBBLE_SIZE + 20) { 
+                                isOverlapping = true;
+                                break;
+                            }
+                        }
+                        attempts++;
+                    } while (isOverlapping && attempts < 50);
+                } else {
+                    position = {
+                        x: -BUBBLE_SIZE,
+                        y: BUBBLE_RADIUS + Math.random() * (window.innerHeight - BUBBLE_SIZE)
+                    };
+                }
+
+                const bubble = {
+                    el: bubbleEl, x: position.x, y: position.y,
+                    dx: 0.7 + Math.random() * 0.7, dy: (Math.random() - 0.5) * 0.7,
+                };
+                bubbles.push(bubble);
+                container.appendChild(bubbleEl);
+            }
+
+            // --- Animation Loop ---
+            function animate() {
+                for (let i = 0; i < bubbles.length; i++) {
+                    const b1 = bubbles[i];
+                    b1.x += b1.dx;
+                    b1.y += b1.dy;
+
+                    if (b1.y - BUBBLE_RADIUS < 0 || b1.y + BUBBLE_RADIUS > window.innerHeight) {
+                        b1.dy *= -1;
+                        b1.y = Math.max(BUBBLE_RADIUS, Math.min(b1.y, window.innerHeight - BUBBLE_RADIUS));
+                    }
+
+                    if (b1.x - BUBBLE_RADIUS > window.innerWidth) {
+                        b1.x = -BUBBLE_SIZE;
+                        b1.y = BUBBLE_RADIUS + Math.random() * (window.innerHeight - BUBBLE_SIZE);
+                    }
+
+                    for (let j = i + 1; j < bubbles.length; j++) {
+                        const b2 = bubbles[j];
+                        const dist = Math.hypot(b1.x - b2.x, b1.y - b2.y);
+                        if (dist < BUBBLE_SIZE) {
+                            [b1.dx, b2.dx] = [b2.dx, b1.dx];
+                            [b1.dy, b2.dy] = [b2.dy, b1.dy];
+                            const overlap = BUBBLE_SIZE - dist;
+                            const angle = Math.atan2(b2.y - b1.y, b2.x - b1.x);
+                            const nudgeX = Math.cos(angle) * (overlap / 2 + 1);
+                            const nudgeY = Math.sin(angle) * (overlap / 2 + 1);
+                            b1.x -= nudgeX; b1.y -= nudgeY;
+                            b2.x += nudgeX; b2.y += nudgeY;
+                        }
+                    }
+                    b1.el.style.transform = `translate(${b1.x - BUBBLE_RADIUS}px, ${b1.y - BUBBLE_RADIUS}px)`;
+                }
+                requestAnimationFrame(animate);
+            }
+
+            // --- Main Initialization (called after password entry) ---
+            function init() {
+                if (!container) {
+                    console.error("Bubble container not found post-auth!");
+                    return;
+                }
+                const TOTAL_BUBBLES = 9;
+                const MIN_INITIAL = 3;
+                const MAX_INITIAL = 6;
+                const SPAWN_DELAY = 3000;
+
+                const initialBubbleCount = Math.floor(Math.random() * (MAX_INITIAL - MIN_INITIAL + 1)) + MIN_INITIAL;
+
+                for (let i = 0; i < initialBubbleCount; i++) {
+                    createBubble(i, true);
+                }
+
+                let remainingToSpawnIndex = initialBubbleCount;
+                function spawnNextBubble() {
+                    if (remainingToSpawnIndex < TOTAL_BUBBLES) {
+                        createBubble(remainingToSpawnIndex, false);
+                        remainingToSpawnIndex++;
+                        setTimeout(spawnNextBubble, SPAWN_DELAY);
+                    }
+                }
+                setTimeout(spawnNextBubble, SPAWN_DELAY);
+                animate();
+            }
+        });
+    </script>
+</body>
+</html>
