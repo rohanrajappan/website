@@ -2,39 +2,39 @@
 
 @font-face {
   font-family: latoThin;
-  src: url('in_use_fonts/lato_thin.ttf');
+  src: url('files/in_use_fonts/lato_thin.ttf');
 }
 @font-face {
   font-family: latoRegular;
-  src: url('in_use_fonts/lato_regular.ttf');
+  src: url('files/in_use_fonts/lato_regular.ttf');
 }
 @font-face {
   font-family: latoBold;
-  src: url('in_use_fonts/lato_bold.ttf');
+  src: url('files/in_use_fonts/lato_bold.ttf');
 }
 @font-face {
   font-family: latoItalic;
-  src: url('in_use_fonts/lato_italic.ttf');
+  src: url('files/in_use_fonts/lato_italic.ttf');
 }
 @font-face {
   font-family: promptThin;
-  src: url('in_use_fonts/prompt_thin.ttf');
+  src: url('files/in_use_fonts/prompt_thin.ttf');
 }
 @font-face {
   font-family: promptRegular;
-  src: url('in_use_fonts/prompt_regular.ttf');
+  src: url('files/in_use_fonts/prompt_regular.ttf');
 }
 @font-face {
   font-family: promptBold;
-  src: url('in_use_fonts/lato_bold.ttf');
+  src: url('files/in_use_fonts/lato_bold.ttf');
 }
 @font-face {
   font-family: promptItalic;
-  src: url('in_use_fonts/prompt_italic.ttf');
+  src: url('files/in_use_fonts/prompt_italic.ttf');
 }
 @font-face {
   font-family:nunitoSans ;
-  src: url('in_use_fonts/nunitosans_variable.ttf');
+  src: url('files/in_use_fonts/nunitosans_variable.ttf');
 }
 /* End Fonts */
 
