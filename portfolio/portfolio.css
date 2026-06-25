@@ -76,7 +76,7 @@ body {
 }
 .sub-img {
   width: 100%;
-  height: 110px;
+  height: 200px;
   object-fit: cover;
   border-radius: 6px;
 }
@@ -209,3 +209,37 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+/* ==========================================================================
+   Portfolio Header Section Styling
+   ========================================================================== */
+
+/* The Page Mission Section: Reuses your bold teal aesthetic */
+.portfolio-mission {
+  font-size: 26px;
+  font-family: nunitoSans, Tahoma, sans-serif;
+  color: #1d4c4a; /* Your website's signature dark green */
+  font-weight: 1000; /* Inherited from your home page's nameInfo weight */
+  max-width: 850px;
+  margin: 0 auto 20px auto; /* Centers text block and leaves gap below */
+  line-height: 1.4;
+}
+
+/* The Pleasantry / Current Status Section: Uses a clean, elegant font style */
+.portfolio-status {
+  font-size: 19px;
+  font-family: latoRegular, Tahoma MS, sans-serif;
+  color: #171a3c; /* Reusing your primary dark gray/navy text color */
+  font-style: italic;
+  max-width: 700px;
+  margin: 0 auto 60px auto; /* Generates the 60px gap right before your cards start */
+  line-height: 1.5;
+}
+
+/* Ensure the underlined parts match your site's anchor/accent blue */
+.portfolio-status .underline {
+  text-decoration: underline;
+  color: #4b3ee4; /* Theme blue accent */
+  font-weight: bold;
+  font-style: normal; /* Straightens up the rocket term so it pops */
+}
+
