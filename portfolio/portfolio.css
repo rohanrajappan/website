@@ -1,0 +1,211 @@
+/* ==========================================================================
+   Global Portfolio Layout Variables & Base Overrides
+   ========================================================================== */
+body {
+  height: auto; /* Allow content to dictate page height organically */
+}
+.portfolio-container {
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+/* Make images visibly zoomable on hover */
+.clickable-img {
+  cursor: zoom-in;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), filter 0.2s;
+}
+.clickable-img:hover {
+  filter: brightness(1.05);
+}
+
+/* ==========================================================================
+   Style 1: Executive Minimalist Grid Card Styles
+   ========================================================================== */
+.project-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(23, 26, 60, 0.08); /* Reusing your dark navy color as shadow alpha */
+  margin-bottom: 60px;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+@media (max-width: 850px) {
+  .project-card { grid-template-columns: 1fr; }
+}
+
+.project-info h2 {
+  font-family: promptRegular, Tahoma MS, sans-serif;
+  color: #171a3c;
+  font-size: 28px;
+  margin-top: 0;
+}
+.tech-tag {
+  display: inline-block;
+  background: rgba(75, 62, 228, 0.1);
+  color: #4b3ee4;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-family: promptRegular, sans-serif;
+  font-weight: bold;
+  margin-right: 8px;
+  margin-bottom: 12px;
+}
+.project-description {
+  color: #333333;
+  line-height: 1.6;
+  font-family: latoRegular, Tahoma MS, sans-serif;
+  font-size: 16px;
+}
+
+/* Image Grid System inside the Minimalist Card */
+.project-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.main-img {
+  grid-column: span 2;
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.sub-img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* ==========================================================================
+   Style 3: Case-Study Timeline Styles
+   ========================================================================== */
+.case-study {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  margin-bottom: 120px;
+  margin-top: 60px;
+}
+.case-study.reverse {
+  flex-direction: row-reverse;
+}
+@media (max-width: 850px) {
+  .case-study, .case-study.reverse { 
+    flex-direction: column; 
+    gap: 30px; 
+  }
+}
+
+.story-text {
+  flex: 1;
+}
+.story-text h2 {
+  font-family: promptRegular, Tahoma MS, sans-serif;
+  font-size: 30px;
+  color: #1d4c4a;
+  margin-bottom: 15px;
+}
+.story-text p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #2b2b2b;
+  font-family: latoRegular, sans-serif;
+}
+
+/* Interactive Floating Stacked Visual Engine */
+.story-visuals {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  height: 320px;
+}
+.stack-img {
+  position: absolute;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  object-fit: cover;
+}
+.img-base {
+  width: 82%;
+  height: 82%;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+.img-accent {
+  width: 52%;
+  height: 52%;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  border: 4px solid #F5F2EF; /* Matches your background color exactly */
+}
+
+/* Scale dynamic shifts on component groupings */
+.story-visuals:hover .img-base {
+  transform: scale(1.03) translate(-4px, -4px);
+}
+.story-visuals:hover .img-accent {
+  transform: scale(1.05) translate(4px, 4px);
+}
+
+/* ==========================================================================
+   Lightweight Vanilla Lightbox Pop-up System Styles
+   ========================================================================== */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 10000; /* Stays above your sticky nav bar */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(22, 21, 30, 0.92); /* Base palette dark tone with high opacity */
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.lightbox.active {
+  display: flex;
+  opacity: 1;
+}
+.lightbox img {
+  max-width: 85%;
+  max-height: 85%;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
+  transform: scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.lightbox.active img {
+  transform: scale(1);
+  cursor: zoom-out;
+}
+.lightbox-close {
+  position: absolute;
+  top: 25px;
+  right: 35px;
+  color: #F5F2EF;
+  font-size: 40px;
+  font-family: promptRegular, sans-serif;
+  cursor: pointer;
+  user-select: none;
+}
+.project-subtitle {
+  font-family: promptRegular, Tahoma MS, sans-serif;
+  color: #1d4c4a; /* Your website's signature dark green */
+  font-size: 19px;
+  font-weight: bold;
+  margin-top: -8px; /* Tucks it closely beneath the main project title */
+  margin-bottom: 20px; /* Leaves a clean space before the description paragraphs */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}

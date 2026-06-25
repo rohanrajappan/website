@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <meta charset="utf-8">
+  <title>Portfolio | Rohan Rajappan</title>
+  <link href="../images/favicondark.png" rel="icon" type="image/x-icon" />
+  
+  <link href="../homepage.css" rel="stylesheet" type="text/css" />
+  <link href="portfolio.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+  <div class="bg-splotch splotch-teal"></div>
+  <div class="bg-splotch splotch-navy"></div>
+  <div class="bg-splotch splotch-blue"></div>
+
+  <div class="nav">
+    <a href="../">
+      <button class="homeButton">
+        <h1 class="homeName">Rohan Rajappan</h1>
+      </button>
+    </a>
+    <div class="rightAlign">
+      <a href="#">
+        <button class="portfolio rButton">
+          <h2 class="rButtonText" style="text-decoration: underline;">Portfolio</h2>
+        </button>
+      </a>
+      <a href="../#about">
+        <button class="aboutMe rButton">
+          <h2 class="rButtonText">About Me</h2>
+        </button>
+      </a>
+      <a href="../#footer">
+        <button class="contact rButton">
+          <h2 class="rButtonText">Contact</h2>
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <div class="portfolio-container">
+    
+    <div class="center">
+      <p class="contactTitle">Engineering Portfolio</p>
+      <div class="nameInfo" style="margin-bottom: 60px;">
+        A showcase of systems engineering, instrumentation design, and applied physics.
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-info">
+        <span class="tech-tag">ADD TAGS</span>
+        <h2>NAME</h2>
+        <div class="project-subtitle">ROLE</div>
+        <p class="project-description">
+          ADD DETAILS OF PROJECT.
+        </p>
+        <p class="project-description">
+          <strong>Key Outcome:</strong> ADD RESULS.
+        </p>
+      </div>
+      
+      <div class="project-gallery">
+        <img class="main-img clickable-img" src="../files/images/portfolio/" alt="ADD IMAGE AND ALT.">
+        <img class="sub-img clickable-img" src="../files/images/portfolio/" alt="ADD IMAGE AND ALT.">
+        <img class="sub-img clickable-img" src="../files/images/portfolio/" alt="ADD IMAGE AND ALT.">
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-info">
+        <span class="tech-tag">ADD TAGS</span>
+        <h2>NAME</h2>
+        <div class="project-subtitle">ROLE</div>
+        <p class="project-description">
+          ADD DETAILS OF PROJECT.
+        </p>
+        <p class="project-description">
+          <strong>Key Outcome:</strong> ADD RESULS.
+        </p>
+      </div>
+      
+      <div class="project-gallery">
+        <img class="main-img clickable-img" src="../files/images/portfolio/" alt="ADD IMAGE AND ALT.">
+        <img class="sub-img clickable-img" src="../files/images/portfolio/" alt="ADD IMAGE AND ALT.">
+        <img class="sub-img clickable-img" src="../files/images/portfolio/" alt="ADD IMAGE AND ALT.">
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-info">
+        <span class="tech-tag">ADD TAGS</span>
+        <h2>NAME</h2>
+        <div class="project-subtitle">ROLE</div>
+        <p class="project-description">
+          ADD DETAILS OF PROJECT.
+        </p>
+        <p class="project-description">
+          <strong>Key Outcome:</strong> ADD RESULS.
+        </p>
+      </div>
+      
+      <div class="project-gallery">
+        <img class="main-img clickable-img" src="../files/images/portfolio/" alt="ADD IMAGE AND ALT.">
+        <img class="sub-img clickable-img" src="../files/images/portfolio/" alt="ADD IMAGE AND ALT.">
+        <img class="sub-img clickable-img" src="../files/images/portfolio/" alt="ADD IMAGE AND ALT.">
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-info">
+        <span class="tech-tag">Rocketry</span>
+        <span class="tech-tag">Composites Preparation</span>
+        <span class="tech-tag">SolidWorks</span>
+        <span class="tech-tag">Surface Preparation</span>
+        <h2>CRT: Event Horizon</h2>
+        <div class="project-subtitle">Composites Engineer</div>
+        <p class="project-description">
+          Add words.
+        </p>
+        <p class="project-description">
+          <strong>Results:</strong> Add outcomes.
+        </p>
+      </div>
+      
+      <div class="project-gallery">
+        <img class="main-img clickable-img" src="../files/images/portfolio/event_horizon.JPG" alt="Image of the entire rocket on the rail with final surface finish.">
+        <img class="sub-img clickable-img" src="../files/images/portfolio/gel_coated.jpg" alt="Nose cone mold with gelcoat applied, after removing the part off the mold.">
+        <img class="sub-img clickable-img" src="../files/images/portfolio/bondo.JPG" alt="Nose cone mold with Bondo applied.">
+      </div>
+    </div>
+
+  </div>
+
+  <div id="lightbox" class="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" src="" alt="Enlarged Visual Document Asset">
+    <div id="lightbox-caption" class="lightbox-caption"></div>
+  </div>
+
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+
+    document.querySelectorAll('.clickable-img').forEach(image => {
+      image.addEventListener('click', () => {
+        lightboxImg.src = image.src;
+        lightboxCaption.textContent = image.alt;
+        lightbox.classList.add('active');
+      });
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target !== lightboxImg && e.target !== lightboxCaption) {
+        lightbox.classList.remove('active');
+      }
+    });
+  </script>
+
+  <footer class = "footer" id="footer">
+  <p>
+    <a class = "footerButton" href = "https://www.linkedin.com/in/rohanrajappan/">
+        <ion-icon name="logo-linkedin" size=large></ion-icon>
+    </a>
+    <a class = "footerButton" href = "mailto:rohan@rajappan.org">
+      <ion-icon name="mail" size=large></ion-icon>
+    </a>
+    <a class = "footerButton" href = "https://github.com/rohanrajappan">
+        <ion-icon name="logo-github" size=large ></ion-icon>
+    </a>
+  </p>
+  <p>&copy 2026 Rohan Rajappan</p>
+</footer>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
+<!-- 
+TEMPLATE:
+
+    <div class="project-card">
+      <div class="project-info">
+        <span class="tech-tag">ADD TAGS</span>
+        <h2>NAME</h2>
+        <div class="project-subtitle">ROLE</div>
+        <p class="project-description">
+          ADD DETAILS OF PROJECT.
+        </p>
+        <p class="project-description">
+          <strong>Key Outcome:</strong> ADD RESULS.
+        </p>
+      </div>
+      
+      <div class="project-gallery">
+        <img class="main-img clickable-img" src="../files/images/portfolio/" alt="ADD IMAGE AND ALT.">
+        <img class="sub-img clickable-img" src="../files/images/portfolio/" alt="ADD IMAGE AND ALT.">
+        <img class="sub-img clickable-img" src="../files/images/portfolio/" alt="ADD IMAGE AND ALT.">
+      </div>
+    </div> 
+    
+    -->
